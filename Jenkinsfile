@@ -1,43 +1,58 @@
 pipeline {
   agent any
   triggers {
-    pollSCM('H/1 * * * *')  // Check GitHub every 5 minutes
+    pollSCM('H/5 * * * *') // Poll GitHub every 5 minutes
   }
   stages {
+
     stage('Build') {
       steps {
-        echo 'Building the app...'
+        echo 'Task: Compile the application using a build tool.'
+        echo 'Tool: Maven'
       }
     }
+
     stage('Unit and Integration Tests') {
       steps {
-        echo 'Running unit and integration tests...'
+        echo 'Task: Run unit tests to validate individual components and integration tests to verify module interaction.'
+        echo 'Tool: JUnit'
       }
     }
+
     stage('Code Analysis') {
       steps {
-        echo 'Performing static code analysis...'
+        echo 'Task: Analyze the code to detect bugs, code smells, and maintainability issues.'
+        echo 'Tool: SonarCloud'
       }
     }
+
     stage('Security Scan') {
       steps {
-        echo 'Running security scan...'
+        echo 'Task: Scan the application dependencies and code for known vulnerabilities.'
+        echo 'Tool: npm audit'
       }
     }
+
     stage('Deploy to Staging') {
       steps {
-        echo 'Deploying to staging...'
+        echo 'Task: Deploy the application to a staging environment for final testing.'
+        echo 'Tool: AWS CLI (to deploy to EC2)'
       }
     }
-    stage('Staging Tests') {
+
+    stage('Integration Tests on Staging') {
       steps {
-        echo 'Running tests on staging...'
+        echo 'Task: Perform integration and functional tests in a production-like staging environment.'
+        echo 'Tool: Postman or Selenium'
       }
     }
+
     stage('Deploy to Production') {
       steps {
-        echo 'Deploying to production...'
+        echo 'Task: Deploy the fully-tested application to the production environment.'
+        echo 'Tool: AWS CLI or Jenkins deploy script'
       }
     }
+
   }
 }
